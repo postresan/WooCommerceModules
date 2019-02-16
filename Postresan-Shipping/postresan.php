@@ -7,7 +7,7 @@
 Plugin Name: افزونه حمل و نقل پست رسان
 Plugin URI: http://postresan.com
 Author: Ramin Bazghandi
-Version: 1.0.1
+Version: 1.0.2
  */
 if(in_array('woocommerce/woocommerce.php',apply_filters('active_plugins',get_option('active_plugins')))) {
   $pw_options = get_option('PW_Options');
@@ -125,6 +125,7 @@ if(in_array('woocommerce/woocommerce.php',apply_filters('active_plugins',get_opt
                 #محاسبه هزینه پست برای حالت تحویل در منزل یا آنلاین
                 public function calculate_shipping ($package = array())
                 {
+
                     $options = get_option('woocommerce_postresan_shipping_settings');
 
                     if ($options['enabled'] == 'no')
@@ -339,7 +340,7 @@ if(in_array('woocommerce/woocommerce.php',apply_filters('active_plugins',get_opt
                      ldMenu(jQuery(this).val(),"billing_city");
              })
          });
-         var wc_ajax_url_postresan = "'.WooCommerce::instance()->ajax_url().'";
+        var wc_ajax_url_postresan = "'.WooCommerce::instance()->ajax_url().'";
      </script>';
     }
 
@@ -392,23 +393,31 @@ if(in_array('woocommerce/woocommerce.php',apply_filters('active_plugins',get_opt
     }
 
 
+
+
     function refresh_payment_methods(){
+
       ?>
-    <script type="text/javascript">
-        (function($){
-            $( 'form.checkout' ).on( 'change', 'input[name^="payment_method"]', function() {
-                $('body').trigger('update_checkout');
+        <script type="text/javascript">
+
+            jQuery(function(){
+                jQuery( 'form.checkout' ).on( 'change', 'input[name^="payment_method"]', function() {
+
+                    if(jQuery('#billing_address_2') !=" ") {
+                        var address = jQuery('#billing_address_1').val();
+                        jQuery.trim(address) == address ? jQuery('#billing_address_1').val(address + ' ') : jQuery('#billing_address_1').val(jQuery.trim(address));
+                    }
+                    else{
+                        jQuery('#billing_address_1').val('');
+                    }
+
+                    jQuery('body').trigger('update_checkout');
+
+                });
             });
-        })(jQuery);
-    </script>
+        </script>
     <?php
 }
-
-
-
-
-
-
 
     function calculated_total_price($total_price)
     {
