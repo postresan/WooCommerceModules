@@ -403,14 +403,10 @@ if(in_array('woocommerce/woocommerce.php',apply_filters('active_plugins',get_opt
             jQuery(function(){
                 jQuery( 'form.checkout' ).on( 'change', 'input[name^="payment_method"]', function() {
 
-                    if(jQuery('#billing_address_2') !=" ") {
+                    if(jQuery('#billing_address_1').val() !="") {
                         var address = jQuery('#billing_address_1').val();
                         jQuery.trim(address) == address ? jQuery('#billing_address_1').val(address + ' ') : jQuery('#billing_address_1').val(jQuery.trim(address));
                     }
-                    else{
-                        jQuery('#billing_address_1').val('');
-                    }
-
                     jQuery('body').trigger('update_checkout');
 
                 });
