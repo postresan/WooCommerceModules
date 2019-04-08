@@ -7,7 +7,7 @@
 Plugin Name: افزونه حمل و نقل پست رسان
 Plugin URI: http://postresan.com
 Author: Ramin Bazghandi
-Version: 1.0.2
+Version: 1.0.3
  */
 if(in_array('woocommerce/woocommerce.php',apply_filters('active_plugins',get_option('active_plugins')))) {
     $pw_options = get_option('PW_Options');
